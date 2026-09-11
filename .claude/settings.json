@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:serpapi.com)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(git -c core.autocrlf=false commit -q -F -)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('hex'\\)\\)\")",
+      "Bash(awk -F= '/^[A-Z_]+=/ {k=$1; v=substr\\($0, index\\($0,\"=\"\\)+1\\); printf \"%-16s %3d chars\\\\n\", k, length\\(v\\)}' .env.local)",
+      "Bash(git -c core.autocrlf=false commit -q -m 'Use a plus mark instead of a photo thumbnail in list rows *)"
     ]
   }
 }

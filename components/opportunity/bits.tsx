@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink as ExternalIcon } from "lucide-react";
+import { ExternalLink as ExternalIcon, Plus } from "lucide-react";
 import {
   CATEGORY_META,
   stageLabel,
@@ -143,13 +143,23 @@ const THUMB_RING: Record<Category, string> = {
  * ring takes its hue and every caller keeps the category spelled out in the
  * row's own text. Colour is never the only carrier.
  */
+/**
+ * Row marker for the opportunities table.
+ *
+ * Deliberately a plain glyph rather than the header photo: at 30px a decorative
+ * stock image is unreadable, and fifty of them down a dense table compete with
+ * the stage, score and follow-up colour — the signals that actually decide what
+ * to do next. The ring still carries the category, so nothing is lost.
+ *
+ * The photo remains on the detail page, where it has room to work.
+ */
 export function OpportunityThumb({
   category,
-  src,
   size = 30,
 }: {
   category: Category;
-  src: string | null;
+  /** Retained so callers need not change; the image is not rendered here. */
+  src?: string | null;
   size?: number;
 }) {
   return (
@@ -157,24 +167,11 @@ export function OpportunityThumb({
       title={CATEGORY_META[category].label}
       style={{ width: size, height: size }}
       className={cn(
-        "shrink-0 block rounded-[6px] overflow-hidden bg-raised ring-1",
+        "shrink-0 grid place-items-center rounded-[6px] bg-raised ring-1 text-ink-faint",
         THUMB_RING[category],
       )}
     >
-      {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover opacity-90"
-        />
-      ) : (
-        <span aria-hidden className="w-full h-full grid place-items-center text-[13px]">
-          {CATEGORY_META[category].icon}
-        </span>
-      )}
+      <Plus size={14} strokeWidth={2} aria-hidden />
     </span>
   );
 }
