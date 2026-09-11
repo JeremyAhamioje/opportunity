@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Opportunity Command Center — design tokens
+   Dark-only, modelled on Notion's dark theme: near-black ground, hairline
+   dividers at ~9% white, text at 81%/44% white rather than pure grey, one blue
+   for action, and colour otherwise reserved for urgency.
+   ========================================================================== */
+
+@theme {
+  --color-canvas: #191919;
+  --color-surface: #1f1f1f;
+  --color-raised: #252525;
+  --color-hover: #2f2f2f;
+  --color-line: #2b2b2b;
+  --color-line-strong: #373737;
+
+  --color-ink: #d4d4d4;
+  --color-ink-muted: #9b9b9b;
+  --color-ink-faint: #6e6e6e;
+
+  --color-accent: #2383e2;
+  --color-accent-hot: #4a9eea;
+  --color-accent-dim: #1c3d5c;
+
+  --color-overdue: #ff7369;
+  --color-duetoday: #ffa344;
+  --color-duesoon: #ffdc49;
+  --color-scheduled: #4dab9a;
+
+  --color-cat-workflow: #9a6dd7;
+  --color-cat-speculative: #ffa344;
+  --color-cat-job: #529cca;
+  --color-cat-scholarship: #4dab9a;
+  --color-cat-build: #e0699f;
+
+  /* Chart marks are darker, higher-chroma steps of the same hues. The badge
+     colours above are small text on chips; these are large fills on the
+     #191919 chart surface, validated for the dark lightness band, chroma
+     floor, colour-vision separation and contrast (scripts/validate_palette.js
+     in the dataviz skill). Do not swap one set for the other. */
+  --color-chart-workflow: #9d70d4;
+  --color-chart-speculative: #c0801f;
+  --color-chart-job: #4a90d9;
+  --color-chart-scholarship: #0f9d72;
+  --color-chart-build: #d15b8f;
+  --color-chart-primary: #9d70d4;
+  --color-chart-secondary: #0f9d72;
+  --color-chart-track: #2b2b2b;
+
+  --color-good: #4dab9a;
+  --color-warn: #ffdc49;
+  --color-bad: #ff7369;
+
+  --font-sans: var(--font-inter), ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.003em;
+}
+
+/* Tabular numerals everywhere numbers are compared vertically. */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(35, 131, 226, 0.32);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #363636;
+  border-radius: 99px;
+  border: 2px solid var(--color-canvas);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #454545;
+}
+
+* {
+  scrollbar-color: #363636 transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
+/* Native date pickers are invisible on a dark ground without this. */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}
+
+input[type="range"] {
+  accent-color: var(--color-accent);
+}
+
+@layer components {
+  /* Shared control chrome — input, select and textarea alike, so a form never
+     looks assembled from three different kits. */
+  .field {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8125rem;
+    line-height: 1.35rem;
+    color: var(--color-ink);
+    transition: background 0.12s ease, box-shadow 0.12s ease;
+  }
+  .field::placeholder {
+    color: var(--color-ink-faint);
+  }
+  .field:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .field:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.055);
+    box-shadow: 0 0 0 2px rgba(35, 131, 226, 0.55);
+  }
+  .field:disabled {
+    opacity: 0.5;
+  }
+
+  .panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+  }
+
+  .row-link {
+    transition: background 0.1s ease;
+  }
+  .row-link:hover {
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  /* The pill row scrolls sideways on narrow screens; the scrollbar itself is
+     noise under a 32px-tall nav. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Notion's pill navigation: the active item carries its label, the rest are
+     icon-only until hovered. */
+  .nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 32px;
+    padding: 0 0.65rem;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--color-ink-muted);
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .nav-pill:hover {
+    background: rgba(255, 255, 255, 0.055);
+    color: var(--color-ink);
+  }
+  .nav-pill[data-active="true"] {
+    background: rgba(255, 255, 255, 0.095);
+    color: #fff;
+  }
+}
+
+/* One deliberate motion cue: the overdue pulse. Nothing else animates. */
+@keyframes pulse-urgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.pulse-urgent {
+  animation: pulse-urgent 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-urgent {
+    animation: none;
+  }
+}

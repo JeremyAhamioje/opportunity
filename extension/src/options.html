@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Opportunity — capture settings</title>
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body class="page">
+    <main>
+      <h1>Browser capture</h1>
+      <p class="muted">
+        Where conversations are sent, and the token that authorises them.
+      </p>
+
+      <label for="endpoint">Your Opportunity address</label>
+      <input id="endpoint" type="url" placeholder="http://localhost:3000" spellcheck="false" />
+      <p class="hint">The address you open the app at. No trailing slash needed.</p>
+
+      <label for="token">Device token</label>
+      <input id="token" type="password" placeholder="oc_…" spellcheck="false" autocomplete="off" />
+      <p class="hint">
+        Generate this in the app under <strong>Settings → Browser capture</strong>. It is shown
+        once. It is not your password, and it can be revoked there at any time.
+      </p>
+
+      <button id="save">Save and grant access</button>
+      <p class="error" id="error" hidden></p>
+      <p class="ok" id="ok" hidden></p>
+
+      <hr />
+
+      <h2>What this extension does</h2>
+      <ul class="muted small">
+        <li>Reads the conversation text rendered on a supported page, when you click Save.</li>
+        <li>Sends it to the address above with your device token.</li>
+        <li>Never reads cookies, credentials, or MFA codes.</li>
+        <li>Never bypasses any site's authentication, and captures nothing on its own.</li>
+      </ul>
+    </main>
+
+    <script src="options.js"></script>
+  </body>
+</html>

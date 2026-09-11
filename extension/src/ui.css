@@ -1,0 +1,200 @@
+/* Matches the app: Notion-dark ground, hairline dividers, one blue for action. */
+:root {
+  color-scheme: dark;
+  --canvas: #191919;
+  --surface: #1f1f1f;
+  --line: #2b2b2b;
+  --ink: #d4d4d4;
+  --muted: #9b9b9b;
+  --faint: #6e6e6e;
+  --accent: #2383e2;
+  --bad: #ff7369;
+  --good: #4dab9a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 320px;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.page {
+  width: auto;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+h1 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+body.page h1 {
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+
+main {
+  padding: 14px;
+}
+
+body.page main {
+  padding: 0;
+}
+
+a {
+  color: var(--accent);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.pulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.muted {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.small {
+  font-size: 11.5px;
+}
+
+.hint {
+  margin: 4px 0 16px;
+  color: var(--faint);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.foot {
+  margin: 12px 0 0;
+  color: var(--faint);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.error {
+  margin: 10px 0 0;
+  color: var(--bad);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.ok {
+  margin: 10px 0 0;
+  color: var(--good);
+  font-size: 12px;
+}
+
+section {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-family: inherit;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(35, 131, 226, 0.55);
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #4a9eea;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+hr {
+  margin: 24px 0 18px;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+li {
+  margin-bottom: 5px;
+  line-height: 1.5;
+}

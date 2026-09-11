@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Save to Opportunity</title>
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Save to Opportunity</h1>
+      <a id="settings" href="#" title="Settings">Settings</a>
+    </header>
+
+    <main id="body">
+      <p class="muted" id="status">Reading this page…</p>
+
+      <section id="preview" hidden>
+        <p class="title" id="title"></p>
+        <p class="muted" id="meta"></p>
+      </section>
+
+      <p class="error" id="error" hidden></p>
+
+      <!-- Shown instead of Save until a token exists. On first run the settings
+           page IS the task, so it gets the primary button rather than a link
+           in the corner that reads as decoration. -->
+      <button id="open-settings" hidden>Open settings</button>
+      <button id="save" disabled>Save conversation</button>
+
+      <p class="foot">
+        Nothing is sent until you press Save. Only the conversation text on
+        screen is read — never your password, cookies, or account.
+      </p>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
