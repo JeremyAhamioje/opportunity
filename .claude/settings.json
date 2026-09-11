@@ -6,7 +6,12 @@
       "Bash(git -c core.autocrlf=false commit -q -F -)",
       "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('hex'\\)\\)\")",
       "Bash(awk -F= '/^[A-Z_]+=/ {k=$1; v=substr\\($0, index\\($0,\"=\"\\)+1\\); printf \"%-16s %3d chars\\\\n\", k, length\\(v\\)}' .env.local)",
-      "Bash(git -c core.autocrlf=false commit -q -m 'Use a plus mark instead of a photo thumbnail in list rows *)"
+      "Bash(git -c core.autocrlf=false commit -q -m 'Use a plus mark instead of a photo thumbnail in list rows *)",
+      "WebFetch(domain:opportunity-xi.vercel.app)",
+      "Bash(sed -i 's/import { countUsers, ensureSettings } from \"@\\\\/lib\\\\/auth\\\\/guard\";/import { ensureSettings } from \"@\\\\/lib\\\\/auth\\\\/guard\";/' lib/actions/auth.ts)",
+      "Bash(sed -i 's/import { setupAccount, signIn } from \"@\\\\/lib\\\\/actions\\\\/auth\";/import { signUp, signIn } from \"@\\\\/lib\\\\/actions\\\\/auth\";/; s/mode === \"setup\" ? setupAccount : signIn/mode === \"setup\" ? signUp : signIn/' components/auth/auth-form.tsx)",
+      "Bash(DATABASE_POOL_MAX=2 npx tsx scripts/_isolation.ts)",
+      "Bash(git -c core.autocrlf=false commit -q -m 'Open registration, and stop migrating on every cold start *)"
     ]
   }
 }

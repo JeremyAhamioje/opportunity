@@ -1,18 +1,22 @@
-import { redirect } from "next/navigation";
-import { countUsers } from "@/lib/auth/guard";
+import Link from "next/link";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { AuthForm } from "@/components/auth/auth-form";
 
 export const dynamic = "force-dynamic";
 
-export default async function LoginPage() {
-  // A fresh install has no owner yet — send the first visitor to setup.
-  if ((await countUsers()) === 0) redirect("/setup");
-
+export default function LoginPage() {
   return (
     <AuthShell
       title="Sign in"
       subtitle="Pick up where you left off. Follow-ups are waiting."
+      footer={
+        <>
+          No account yet?{" "}
+          <Link href="/setup" className="text-accent hover:text-accent-hot hover:underline">
+            Create one
+          </Link>
+        </>
+      }
     >
       <AuthForm mode="login" />
     </AuthShell>

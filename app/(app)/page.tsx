@@ -26,6 +26,7 @@ import {
   StatTile,
 } from "@/components/opportunity/bits";
 import { FollowUpTable } from "@/components/opportunity/follow-up-table";
+import { WelcomeTour } from "@/components/shell/welcome-tour";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -92,6 +93,9 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-5 lg:p-6 max-w-[1400px]">
+      {/* Only for an account with nothing in it, so it never interrupts work. */}
+      <WelcomeTour isNew={summary.active === 0 && summary.sent === 0} />
+
       <PageHeader
         title="Opportunity Command Center"
         subtitle="Find opportunities. Take the shot. Follow up. Repeat."

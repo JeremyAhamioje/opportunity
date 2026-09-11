@@ -36,13 +36,41 @@ async function createNodePostgres(url: string): Promise<Database> {
   const { drizzle } = await import("drizzle-orm/node-postgres");
   const { migrate } = await import("drizzle-orm/node-postgres/migrator");
 
+  /*
+   * Small on purpose. Supabase's session pooler allows 15 clients in total, and
+   * every serverless instance opens its own pool — so a generous `max` means
+   * three or four warm lambdas exhaust the database for everyone and the site
+   * starts failing under exactly the concurrency a demo produces.
+   *
+   * `idleTimeoutMillis` matters as much as `max` here: a frozen serverless
+   * function holds its sockets open indefinitely otherwise, so connections are
+   * never returned by instances that have stopped serving traffic.
+   *
+   * The long-term fix is the transaction pooler on port 6543, which is built
+   * for this — but migrations need session mode, so that swap only makes sense
+   * once the schema stops changing and migrations move out of the request path.
+   */
   const pool = new Pool({
     connectionString: url,
     ssl: url.includes("sslmode=disable") ? false : { rejectUnauthorized: false },
-    max: 5,
+    max: Number(process.env.DATABASE_POOL_MAX ?? 3),
+    idleTimeoutMillis: 10_000,
+    connectionTimeoutMillis: 15_000,
   });
   const db = drizzle(pool, { schema });
-  await migrate(db, { migrationsFolder: MIGRATIONS_FOLDER });
+
+  /*
+   * Migrating on every cold start is fine against an embedded database and
+   * wrong against a pooled one: each instance runs `CREATE SCHEMA` and holds a
+   * connection to do it, so a burst of traffic spends the connection budget on
+   * work that only needed doing once.
+   *
+   * Set SKIP_MIGRATIONS=1 in production and run `npm run db:migrate` as part of
+   * deploying instead.
+   */
+  if (process.env.SKIP_MIGRATIONS !== "1") {
+    await migrate(db, { migrationsFolder: MIGRATIONS_FOLDER });
+  }
   return db as unknown as Database;
 }
 

@@ -1,19 +1,27 @@
-import { redirect } from "next/navigation";
-import { countUsers } from "@/lib/auth/guard";
-import { databaseLabel } from "@/lib/db";
+import Link from "next/link";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { AuthForm } from "@/components/auth/auth-form";
 
 export const dynamic = "force-dynamic";
 
-export default async function SetupPage() {
-  if ((await countUsers()) > 0) redirect("/login");
-
+/**
+ * Open registration. Anyone can create an account, and it starts empty —
+ * every table is keyed on `user_id` and every query, page and server action is
+ * scoped to the signed-in user, so a new account inherits nothing.
+ */
+export default function SignUpPage() {
   return (
     <AuthShell
-      title="Claim this instance"
-      subtitle="One account owns this command center. Create it now — nobody else can claim it afterwards."
-      footer={<>Storage: {databaseLabel()}. Your data never leaves this machine unless you point it at a hosted database.</>}
+      title="Create your account"
+      subtitle="Your own pipeline, empty and private. Nothing is shared with other accounts."
+      footer={
+        <>
+          Already have one?{" "}
+          <Link href="/login" className="text-accent hover:text-accent-hot hover:underline">
+            Sign in
+          </Link>
+        </>
+      }
     >
       <AuthForm mode="setup" />
     </AuthShell>

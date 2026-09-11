@@ -2,13 +2,13 @@
 
 import { useActionState } from "react";
 import { AlertCircle } from "lucide-react";
-import { setupAccount, signIn } from "@/lib/actions/auth";
+import { signUp, signIn } from "@/lib/actions/auth";
 import { Field, Input } from "@/components/ui";
 import { SubmitButton } from "@/components/ui/client";
 import type { ActionResult } from "@/lib/actions/shared";
 
 export function AuthForm({ mode }: { mode: "login" | "setup" }) {
-  const action = mode === "setup" ? setupAccount : signIn;
+  const action = mode === "setup" ? signUp : signIn;
   const [state, formAction] = useActionState<ActionResult | null, FormData>(action, null);
 
   return (

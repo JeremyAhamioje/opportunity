@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Crosshair } from "lucide-react";
+import { ArrowUpRight, Crosshair } from "lucide-react";
 import { CoreLoop } from "@/components/brand/core-loop";
 
 export function AuthShell({
@@ -60,8 +60,41 @@ export function AuthShell({
           {children}
 
           {footer ? <div className="mt-6 text-[11.5px] text-ink-faint">{footer}</div> : null}
+
+          <div className="mt-5 pt-5 border-t border-line flex flex-wrap items-center gap-x-4 gap-y-2">
+            {/*
+              There is no automated password reset: this instance sends no
+              transactional mail beyond the digest, and a reset flow that
+              silently fails is worse than an honest human one.
+            */}
+            <a
+              href={ADMIN_WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11.5px] text-ink-faint hover:text-ink transition-colors"
+            >
+              Forgot password? Contact admin
+            </a>
+            <a
+              href="https://jeremybuilds.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[11.5px] text-ink-faint hover:text-accent-hot transition-colors ml-auto"
+            >
+              View my portfolio
+              <ArrowUpRight size={11} />
+            </a>
+          </div>
         </div>
       </section>
     </main>
   );
 }
+
+/**
+ * wa.me needs the full international number with no leading zero or plus —
+ * 0806… is +234 806…, and the local form silently opens an empty chat.
+ */
+const ADMIN_WHATSAPP =
+  "https://wa.me/2348066704987?text=" +
+  encodeURIComponent("Hi Jeremy — I need a password reset for Opportunity Command Center.");

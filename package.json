@@ -17,7 +17,9 @@
     "check:prompts": "tsx scripts/check-prompts.ts",
     "ingest": "tsx scripts/ingest.ts",
     "import": "tsx scripts/import-file.ts",
-    "migrate:postgres": "tsx scripts/migrate-to-postgres.ts"
+    "migrate:postgres": "tsx scripts/migrate-to-postgres.ts",
+    "reset:password": "tsx scripts/reset-password.ts",
+    "db:migrate": "tsx scripts/db-migrate.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.8",
